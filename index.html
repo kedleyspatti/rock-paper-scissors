@@ -11,75 +11,109 @@
 let selecJogador = "";
 let selecPc = "";
 let opcionesJogo = ["pedra", "papel", "tesoura"];
+let playerOne = 0;
+let playerTwo = 0;
+let a = 0;
 
 
 // ----- Define as Funções do programa.
-// Função selecaoPC().
+// Função da seleção do Computador.
 function selecaoPc() {
     let diferencia = 3;
     let aleatorio = Math.random();
     aleatorio = Math.floor( aleatorio * diferencia);
     aleatorio = aleatorio + 1;
     let opcionEligida = opcionesJogo[aleatorio - 1];
-    console.log(opcionEligida);
-    console.log(aleatorio - 1);
     return opcionEligida
 
 }
 
-// Função jogo().
+// Função de verificar se há algum ganhador.
+function verificarGanhador() {
+    if (playerOne == 3 || playerTwo == 3) {
+            if (playerOne == 3) {
+                alert("Jogador Humano ganhou!");
+                return true
+            } else {
+                alert("Computador ganhou!");
+                return true
+            }
+        } else {
+            a++;
+            return false
+        }
+}
+
+// Função que roda o jogo.
 function jogo(partida) {
-    // Situação Empate:
-    if (selecJogador == selecPc) {
-        alert("Empate!");
-        return
-    }
 
-    // Situação Pedra:
-    if (selecJogador == "pedra") {
-        if (selecPc == "tesoura") {
-            alert("Pedra destroi tesoura!");
-            return
-        } else {
-            alert("Papel destroi pedra!");
-            return
-        }
-    }
+    // Inicia Loop de 5 partidas.
+    while (a <= 5) {
 
-    // Situação Papel:
-    if (selecJogador == "papel") {
-        if (selecPc == "pedra") {
-            alert("Papel destroi pedra!");
+        // Verifica se alguém já gangou ao menos 3 partidas:
+        if (verificarGanhador()) {
             return
-        } else {
-            alert("Tesoura destroi papel!");
-            return
-        }
-    }
+        };
 
-    // Situação Tesoura:
-    if (selecJogador == "tesoura") {
-        if (selecPc == "papel") {
-            alert("Tesoura destroi papel!");
-            return
+        // Computador Seleciona sua opção.
+        selecPc = selecaoPc();
+        selecJogador = prompt("Escolha entre Pedra, Papel e Tesoura:").toLowerCase();
+
+        // Situação Empate:
+        if (selecJogador == selecPc) {
+            alert("Empate!");
+            a--;
         } else {
-            alert("Pedra destroi tesoura!");
-            return
+
+            // Situação Pedra:
+            if (selecJogador == "pedra") {
+                a++;
+                if (selecPc == "tesoura") {
+                    alert("Pedra destroi tesoura!");
+                    playerOne++;
+                } else {
+                    alert("Papel destroi pedra!");
+                    playerTwo++;
+                }
+            }
+
+            // Situação Papel:
+            if (selecJogador == "papel") {
+                a++;
+                if (selecPc == "pedra") {
+                    alert("Papel destroi pedra!");
+                    playerOne++;
+                } else {
+                    alert("Tesoura destroi papel!");
+                    playerTwo++;
+                }
+            }
+
+            // Situação Tesoura:
+            if (selecJogador == "tesoura") {
+                a++;
+                if (selecPc == "papel") {
+                    alert("Tesoura destroi papel!");
+                    playerOne++;
+                } else {
+                    alert("Pedra destroi tesoura!");
+                    playerTwo;
+                }
+            }
+
         }
+
+        
     }
 
 }
 // -----
 
 
-// Exibe mensagem de boas vindas e faz Input com prompt.
+// INICIA O PROGRAMA TODO.
 alert("Bem-vindo ao Joken Po!");
-selecJogador = prompt("Escolha entre Pedra, Papel e Tesoura:").toLowerCase();
-console.log(selecJogador);
-
-// Faz a seleção do Computador.
-selecPc = selecaoPc();
 jogo();
+alert("Fim de jogo!");
 
 </script>
 

@@ -39,7 +39,6 @@ function verificarGanhador() {
                 return true
             }
         } else {
-            a++;
             return false
         }
 }
@@ -48,7 +47,7 @@ function verificarGanhador() {
 function jogo(partida) {
 
     // Inicia Loop de 5 partidas.
-    while (a <= 5) {
+    for (a; a = 5;) {
 
         // Verifica se alguém já gangou ao menos 3 partidas:
         if (verificarGanhador()) {
@@ -100,12 +99,9 @@ function jogo(partida) {
                     playerTwo;
                 }
             }
-
-        }
-
-        
+            a++;
+        }  
     }
-
 }
 // -----
 

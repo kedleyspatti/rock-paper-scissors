@@ -3,35 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joken Po!</title>
+    <title>Jo-ken-Po!</title>
 </head>
-<script>
 
-// Variáveis Globais.
-let selecJogador = "";
-let selecPc = "";
+<script>
+let playersChoice = "";
+let computersChoice = "";
 let opcionesJogo = ["pedra", "papel", "tesoura"];
-let playerOne = 0;
-let playerTwo = 0;
+let playerOnePoints = 0;
+let playerTwoPoints = 0;
 let a = 0;
 
 
-// ----- Define as Funções do programa.
-// Função da seleção do Computador.
-function selecaoPc() {
+function getComputerChoice() {
     let diferencia = 3;
     let aleatorio = Math.random();
     aleatorio = Math.floor( aleatorio * diferencia);
     aleatorio = aleatorio + 1;
     let opcionEligida = opcionesJogo[aleatorio - 1];
     return opcionEligida
-
 }
 
-// Função de verificar se há algum ganhador.
-function verificarGanhador() {
-    if (playerOne == 3 || playerTwo == 3) {
-            if (playerOne == 3) {
+function verifyIfTheresWinner() {
+    if (playerOnePoints == 3 || playerTwoPoints == 3) {
+            if (playerOnePoints == 3) {
                 alert("Jogador Humano ganhou!");
                 return true
             } else {
@@ -43,74 +38,63 @@ function verificarGanhador() {
         }
 }
 
-// Função que roda o jogo.
-function jogo(partida) {
-
-    // Inicia Loop de 5 partidas.
+function game() {
     for (a; a = 5;) {
 
-        // Verifica se alguém já gangou ao menos 3 partidas:
-        if (verificarGanhador()) {
+        if (verifyIfTheresWinner()) {
             return
-        };
+        }
 
-        // Computador Seleciona sua opção.
-        selecPc = selecaoPc();
-        selecJogador = prompt("Escolha entre Pedra, Papel e Tesoura:").toLowerCase();
+        computersChoice = getComputerChoice();
+        playersChoice = prompt("Escolha entre Pedra, Papel e Tesoura:").toLowerCase();
 
-        // Situação Empate:
-        if (selecJogador == selecPc) {
+        // Screen Draw situations first, and follows the game if not:
+        if (playersChoice == computersChoice) {
             alert("Empate!");
-            a--;
+            a--; // Decrement the best-of-five rule loop if theres is a Draw.
         } else {
 
-            // Situação Pedra:
-            if (selecJogador == "pedra") {
-                a++;
-                if (selecPc == "tesoura") {
+            if (playersChoice == "pedra") {
+                if (computersChoice == "tesoura") {
                     alert("Pedra destroi tesoura!");
-                    playerOne++;
+                    playerOnePoints++;
                 } else {
                     alert("Papel destroi pedra!");
-                    playerTwo++;
+                    playerTwoPoints++;
                 }
+                a++;
             }
 
-            // Situação Papel:
-            if (selecJogador == "papel") {
-                a++;
-                if (selecPc == "pedra") {
+            if (playersChoice == "papel") {
+                if (computersChoice == "pedra") {
                     alert("Papel destroi pedra!");
-                    playerOne++;
+                    playerOnePoints++;
                 } else {
                     alert("Tesoura destroi papel!");
-                    playerTwo++;
+                    playerTwoPoints++;
                 }
+                a++;
             }
 
-            // Situação Tesoura:
-            if (selecJogador == "tesoura") {
-                a++;
-                if (selecPc == "papel") {
+            if (playersChoice == "tesoura") {
+                if (computersChoice == "papel") {
                     alert("Tesoura destroi papel!");
-                    playerOne++;
+                    playerOnePoints++;
                 } else {
                     alert("Pedra destroi tesoura!");
-                    playerTwo;
+                    playerTwoPoints++;
                 }
+                a++;
             }
-            a++;
+            a++; // Increment for best-of-five rule loop, for every situation that is not a Draw.
         }  
     }
 }
-// -----
 
 
-// INICIA O PROGRAMA TODO.
 alert("Bem-vindo ao Joken Po!");
-jogo();
+game();
 alert("Fim de jogo!");
-
 </script>
 
 <body>

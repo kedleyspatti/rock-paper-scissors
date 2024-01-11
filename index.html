@@ -4,100 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jo-ken-Po!</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<script>
-let playersChoice = "";
-let computersChoice = "";
-let opcionesJogo = ["pedra", "papel", "tesoura"];
-let playerOnePoints = 0;
-let playerTwoPoints = 0;
-let a = 0;
-
-
-function getComputerChoice() {
-    let diferencia = 3;
-    let aleatorio = Math.random();
-    aleatorio = Math.floor( aleatorio * diferencia);
-    aleatorio = aleatorio + 1;
-    let opcionEligida = opcionesJogo[aleatorio - 1];
-    return opcionEligida
-}
-
-function verifyIfTheresWinner() {
-    if (playerOnePoints == 3 || playerTwoPoints == 3) {
-            if (playerOnePoints == 3) {
-                alert("Jogador Humano ganhou!");
-                return true
-            } else {
-                alert("Computador ganhou!");
-                return true
-            }
-        } else {
-            return false
-        }
-}
-
-function game() {
-    for (a; a = 5;) {
-
-        if (verifyIfTheresWinner()) {
-            return
-        }
-
-        computersChoice = getComputerChoice();
-        playersChoice = prompt("Escolha entre Pedra, Papel e Tesoura:").toLowerCase();
-
-        // Screen Draw situations first, and follows the game if not:
-        if (playersChoice == computersChoice) {
-            alert("Empate!");
-            a--; // Decrement the best-of-five rule loop if theres is a Draw.
-        } else {
-
-            if (playersChoice == "pedra") {
-                if (computersChoice == "tesoura") {
-                    alert("Pedra destroi tesoura!");
-                    playerOnePoints++;
-                } else {
-                    alert("Papel destroi pedra!");
-                    playerTwoPoints++;
-                }
-                a++;
-            }
-
-            if (playersChoice == "papel") {
-                if (computersChoice == "pedra") {
-                    alert("Papel destroi pedra!");
-                    playerOnePoints++;
-                } else {
-                    alert("Tesoura destroi papel!");
-                    playerTwoPoints++;
-                }
-                a++;
-            }
-
-            if (playersChoice == "tesoura") {
-                if (computersChoice == "papel") {
-                    alert("Tesoura destroi papel!");
-                    playerOnePoints++;
-                } else {
-                    alert("Pedra destroi tesoura!");
-                    playerTwoPoints++;
-                }
-                a++;
-            }
-            a++; // Increment for best-of-five rule loop, for every situation that is not a Draw.
-        }  
-    }
-}
-
-
-alert("Bem-vindo ao Joken Po!");
-game();
-alert("Fim de jogo!");
-</script>
-
 <body>
+
+<!-- <script src="script.js" defer></script> -->
+
+<div id="fatherDiv" class="father">
+    <div id="intro">Escolha uma das opções:</div>
+
+    <div id="div-result"></div>
+
+    <div id="div-buttons">
+        <button id="button-rock" class="button-game">Pedra</button>
+        <button id="button-paper" class="button-game">Papel</button>
+        <button id="button-scisor" class="button-game">Tesoura</button>
+    </div>
+</div>
     
 </body>
 </html>

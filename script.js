@@ -18,10 +18,10 @@ function getComputerChoice() {
 function verifyIfTheresWinner() {
     if (playerOnePoints == 3 || playerTwoPoints == 3) {
             if (playerOnePoints == 3) {
-                alert("Jogador Humano ganhou!");
+                divResults.textContent = 'Jogador Humano ganhou!';
                 return true
             } else {
-                alert("Computador ganhou!");
+                divResults.textContent = 'Computador ganhou!';
                 return true
             }
         } else {
@@ -32,42 +32,42 @@ function verifyIfTheresWinner() {
 function game() {
 
         if (verifyIfTheresWinner()) {
-            return alert("Fim de jogo!");
+            return
         }
 
         computersChoice = getComputerChoice();
 
         // Screen Draw situations first, and follows the game if not:
         if (playersChoice == computersChoice) {
-            alert("Empate!");
+            divResults.textContent = 'Empate!';
         } else {
 
             if (playersChoice == "pedra") {
                 if (computersChoice == "tesoura") {
-                    alert("Pedra destroi tesoura!");
+                    divResults.textContent = 'Pedra destroi tesoura, jogador ganhou!';
                     playerOnePoints++;
                 } else {
-                    alert("Papel destroi pedra!");
+                    divResults.textContent = 'Papel destroi pedra, computador ganhou!';
                     playerTwoPoints++;
                 }
             }
 
             if (playersChoice == "papel") {
                 if (computersChoice == "pedra") {
-                    alert("Papel destroi pedra!");
+                    divResults.textContent = 'Papel destroi pedra, jogador ganhou!';
                     playerOnePoints++;
                 } else {
-                    alert("Tesoura destroi papel!");
+                    divResults.textContent = 'Tesoura destroi papel, computador ganhou!';
                     playerTwoPoints++;
                 }
             }
 
             if (playersChoice == "tesoura") {
                 if (computersChoice == "papel") {
-                    alert("Tesoura destroi papel!");
+                    divResults.textContent = 'Tesoura destroi papel, jogador ganhou!';
                     playerOnePoints++;
                 } else {
-                    alert("Pedra destroi tesoura!");
+                    divResults.textContent = 'Pedra destroi tesoura, computador ganhou!';
                     playerTwoPoints++;
                 }
             }
@@ -75,11 +75,14 @@ function game() {
 }
 
 // Start the Page.
-alert("Bem-vindo ao Joken Po!");
+// alert("Bem-vindo ao Joken Po!");
 
-// Evetns creation:
+// Events creation:
 let gameButton = document.querySelector('#div-buttons');
+let divResults = document.querySelector('#div-result');
+let restartButton = document.querySelector('#button-restart');
 
+    // Cliques nas opções de jogador.
 gameButton.addEventListener('click', (e) => {
     let targetButton = e.target;
 
@@ -99,4 +102,11 @@ gameButton.addEventListener('click', (e) => {
             game();
             break
     }
+});
+
+    // Clique no botão restart.
+restartButton.addEventListener('click', (e) => {
+    playerOnePoints = 0;
+    playerTwoPoints = 0;
+    divResults.innerText = '';
 });

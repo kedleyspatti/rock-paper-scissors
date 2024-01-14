@@ -1,9 +1,19 @@
+/* 
+Falta fazer:
+- Mudar a lógica da game() para eliminar of if e colocar o switch-case no lugar. (Esta em uma branch - trylogic)
+*/
+
 let playersChoice = "";
 let computersChoice = "";
 let opcionesJogo = ["pedra", "papel", "tesoura"];
 let playerOnePoints = 0;
 let playerTwoPoints = 0;
 let a = 0;
+
+
+function announcesPoints(divTarget) {
+    return divTarget.textContent = `Humano: ${playerOnePoints}  |  Computador: ${playerTwoPoints}`;
+}
 
 
 function getComputerChoice() {
@@ -18,7 +28,8 @@ function getComputerChoice() {
 function verifyIfTheresWinner() {
     if (playerOnePoints == 3 || playerTwoPoints == 3) {
             if (playerOnePoints == 3) {
-                divResults.textContent = 'Jogador Humano ganhou!';
+                divResults.textContent = 'Humano ganhou!';
+                announcesPoints(divPoints);
                 return true
             } else {
                 divResults.textContent = 'Computador ganhou!';
@@ -44,31 +55,38 @@ function game() {
 
             if (playersChoice == "pedra") {
                 if (computersChoice == "tesoura") {
-                    divResults.textContent = 'Pedra destroi tesoura, jogador ganhou!';
                     playerOnePoints++;
+                    divResults.textContent = 'Pedra destroi tesoura, humano ganhou!';
+                    announcesPoints(divPoints);
+                    
                 } else {
-                    divResults.textContent = 'Papel destroi pedra, computador ganhou!';
                     playerTwoPoints++;
+                    divResults.textContent = 'Papel destroi pedra, computador ganhou!';
+                    announcesPoints(divPoints);
                 }
             }
 
             if (playersChoice == "papel") {
                 if (computersChoice == "pedra") {
-                    divResults.textContent = 'Papel destroi pedra, jogador ganhou!';
                     playerOnePoints++;
+                    divResults.textContent = 'Papel destroi pedra, humano ganhou!';
+                    announcesPoints(divPoints);
                 } else {
-                    divResults.textContent = 'Tesoura destroi papel, computador ganhou!';
                     playerTwoPoints++;
+                    divResults.textContent = 'Tesoura destroi papel, computador ganhou!';
+                    announcesPoints(divPoints);
                 }
             }
 
             if (playersChoice == "tesoura") {
                 if (computersChoice == "papel") {
-                    divResults.textContent = 'Tesoura destroi papel, jogador ganhou!';
                     playerOnePoints++;
+                    divResults.textContent = 'Tesoura destroi papel, humano ganhou!';
+                    announcesPoints(divPoints);
                 } else {
-                    divResults.textContent = 'Pedra destroi tesoura, computador ganhou!';
                     playerTwoPoints++;
+                    divResults.textContent = 'Pedra destroi tesoura, computador ganhou!';
+                    announcesPoints(divPoints);
                 }
             }
         }
@@ -80,9 +98,10 @@ function game() {
 // Events creation:
 let gameButton = document.querySelector('#div-buttons');
 let divResults = document.querySelector('#div-result');
+let divPoints = document.querySelector('#points');
 let restartButton = document.querySelector('#button-restart');
 
-    // Cliques nas opções de jogador.
+    // Cliques nas opções de humano.
 gameButton.addEventListener('click', (e) => {
     let targetButton = e.target;
 
@@ -108,5 +127,6 @@ gameButton.addEventListener('click', (e) => {
 restartButton.addEventListener('click', (e) => {
     playerOnePoints = 0;
     playerTwoPoints = 0;
-    divResults.innerText = '';
+    divResults.textContent = '';
+    divPoints.textContent = '';
 });

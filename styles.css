@@ -24,7 +24,6 @@ div {
     font-family: Lato, sans-serif;
 }
 
-
 .div-results {
     width: auto;
     height: 20px;
@@ -38,4 +37,20 @@ div {
 button {
     padding: 5px 10px;
     border-radius: 10px;
+}
+
+.span-partidas, .span-human, .span-computer, .span-draw { 
+    font-weight: bold;
+}
+
+.span-human {
+    color: green;
+}
+
+.span-computer {
+    color: red;
+}
+
+.span-draw {
+    color: yellow;
 }

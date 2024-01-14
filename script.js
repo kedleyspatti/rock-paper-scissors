@@ -7,10 +7,33 @@ let playerTwoPoints = 0;
 let drawCounter = 0;
 let gameCounter = 0;
 
+let spanPartidas = document.createElement('span');
+let spanHuman = document.createElement('span');
+let spanComputer = document.createElement('span');
+let spanDraw = document.createElement('span');
+spanPartidas.classList.toggle('span-partidas');
+spanHuman.classList.toggle('span-human');
+spanComputer.classList.toggle('span-computer');
+spanDraw.classList.toggle('span-draw');
+spanDraw.textContent = `${drawCounter}`;
+spanHuman.textContent = `${playerOnePoints}`;
+spanComputer.textContent = `${playerTwoPoints}`;
+spanDraw.textContent = `${drawCounter}`;
+
 
 // FUNCTIONS:
 function announcesPoints(divTarget) {
-    return divTarget.textContent = `Partida: ${gameCounter} | Humano: ${playerOnePoints}  |  Computador: ${playerTwoPoints} | Empate: ${drawCounter}`;
+    divTarget.appendChild(document.createTextNode(`Partida: ${gameCounter} | Humano: `))
+    divTarget.appendChild(spanHuman);
+    divTarget.appendChild(document.createTextNode(` | Computador: `));
+    divTarget.appendChild(spanComputer);
+    divTarget.appendChild(document.createTextNode(` | Empates: `));
+    divTarget.appendChild(spanDraw);
+}
+
+function updatePointsSpans() {
+    spanHuman.textContent = `${playerOnePoints}`;
+    spanComputer.textContent = `${playerTwoPoints}`;
 }
 
 function getComputerChoice() {
@@ -35,6 +58,7 @@ function verifyIfTheresWinner() {
                 return true
             } else {
                 divResults.textContent = 'Computador venceu!';
+                announcesPoints(divPoints);
                 return true
             }
         } else {
@@ -44,18 +68,19 @@ function verifyIfTheresWinner() {
 
 function game() {
 
-    gameCounter += 1;
-
     if (verifyIfTheresWinner()) {
         return
     }
+
+    gameCounter += 1;
 
     computersChoice = getComputerChoice();
 
     // Screen Draw situations first, and follows the game if not:
     if (playersChoice == computersChoice) {
-        divResults.textContent = 'Empate!';
         drawCounter += 1;
+        divResults.textContent = 'Empate!';
+        spanDraw.textContent = `${drawCounter}`;
         announcesPoints(divPoints);
     } else {
         switch (playersChoice) {
@@ -63,9 +88,11 @@ function game() {
                 if (computersChoice == "tesoura") {
                     playerOnePoints++;
                     divResults.textContent = 'Pedra destroi tesoura, humano ganhou!';
+                    updatePointsSpans()
                 } else {
                     playerTwoPoints++;
                     divResults.textContent = 'Papel destroi pedra, computador ganhou!';
+                    updatePointsSpans()
                 }
                 break;
 
@@ -73,22 +100,30 @@ function game() {
                 if (computersChoice == "pedra") {
                     playerOnePoints++;
                     divResults.textContent = 'Papel destroi pedra, humano ganhou!';
+                    updatePointsSpans()
+                    
                 } else {
                     playerTwoPoints++;
                     divResults.textContent = 'Tesoura destroi papel, computador ganhou!';
+                    updatePointsSpans()
+                    
                 }
+                break;
 
             case 'tesoura':
                 if (computersChoice == "papel") {
                     playerOnePoints++;
+                    updatePointsSpans()
                     divResults.textContent = 'Tesoura destroi papel, humano ganhou!';
                 } else {
                     playerTwoPoints++;
+                    updatePointsSpans()
                     divResults.textContent = 'Pedra destroi tesoura, computador ganhou!';
                 }
+                break;
         }
         announcesPoints(divPoints);
-        resetChoices();    
+        resetChoices();  
     }
 }
 
@@ -104,6 +139,7 @@ let restartButton = document.querySelector('#button-restart');
     // Selections Buttons:
 gameButton.addEventListener('click', (e) => {
     let targetButton = e.target;
+    divPoints.textContent = '';
 
     switch (targetButton.id) {
         case 'button-rock':
@@ -131,4 +167,6 @@ restartButton.addEventListener('click', (e) => {
     gameCounter = 0;
     divResults.textContent = '';
     divPoints.textContent = '';
+    spanDraw.textContent = `${drawCounter}`;
+    updatePointsSpans()
 });

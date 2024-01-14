@@ -1,20 +1,17 @@
-/* 
-Falta fazer:
-- Mudar a lógica da game() para eliminar of if e colocar o switch-case no lugar. (Esta em uma branch - trylogic)
-*/
 
 let playersChoice = "";
 let computersChoice = "";
 let opcionesJogo = ["pedra", "papel", "tesoura"];
 let playerOnePoints = 0;
 let playerTwoPoints = 0;
-let a = 0;
+let drawCounter = 0;
+let gameCounter = 0;
 
 
+// FUNCTIONS:
 function announcesPoints(divTarget) {
-    return divTarget.textContent = `Humano: ${playerOnePoints}  |  Computador: ${playerTwoPoints}`;
+    return divTarget.textContent = `Partida: ${gameCounter} | Humano: ${playerOnePoints}  |  Computador: ${playerTwoPoints} | Empate: ${drawCounter}`;
 }
-
 
 function getComputerChoice() {
     let diferencia = 3;
@@ -25,14 +22,19 @@ function getComputerChoice() {
     return opcionEligida
 }
 
+function resetChoices() {
+    computersChoice = '';
+    playersChoice = '';
+}
+
 function verifyIfTheresWinner() {
     if (playerOnePoints == 3 || playerTwoPoints == 3) {
             if (playerOnePoints == 3) {
-                divResults.textContent = 'Humano ganhou!';
+                divResults.textContent = 'Humano venceu!';
                 announcesPoints(divPoints);
                 return true
             } else {
-                divResults.textContent = 'Computador ganhou!';
+                divResults.textContent = 'Computador venceu!';
                 return true
             }
         } else {
@@ -42,66 +44,64 @@ function verifyIfTheresWinner() {
 
 function game() {
 
-        if (verifyIfTheresWinner()) {
-            return
-        }
+    gameCounter += 1;
 
-        computersChoice = getComputerChoice();
+    if (verifyIfTheresWinner()) {
+        return
+    }
 
-        // Screen Draw situations first, and follows the game if not:
-        if (playersChoice == computersChoice) {
-            divResults.textContent = 'Empate!';
-        } else {
+    computersChoice = getComputerChoice();
 
-            if (playersChoice == "pedra") {
+    // Screen Draw situations first, and follows the game if not:
+    if (playersChoice == computersChoice) {
+        divResults.textContent = 'Empate!';
+        drawCounter += 1;
+        announcesPoints(divPoints);
+    } else {
+        switch (playersChoice) {
+            case 'pedra':
                 if (computersChoice == "tesoura") {
                     playerOnePoints++;
                     divResults.textContent = 'Pedra destroi tesoura, humano ganhou!';
-                    announcesPoints(divPoints);
-                    
                 } else {
                     playerTwoPoints++;
                     divResults.textContent = 'Papel destroi pedra, computador ganhou!';
-                    announcesPoints(divPoints);
                 }
-            }
+                break;
 
-            if (playersChoice == "papel") {
+            case 'papel':
                 if (computersChoice == "pedra") {
                     playerOnePoints++;
                     divResults.textContent = 'Papel destroi pedra, humano ganhou!';
-                    announcesPoints(divPoints);
                 } else {
                     playerTwoPoints++;
                     divResults.textContent = 'Tesoura destroi papel, computador ganhou!';
-                    announcesPoints(divPoints);
                 }
-            }
 
-            if (playersChoice == "tesoura") {
+            case 'tesoura':
                 if (computersChoice == "papel") {
                     playerOnePoints++;
                     divResults.textContent = 'Tesoura destroi papel, humano ganhou!';
-                    announcesPoints(divPoints);
                 } else {
                     playerTwoPoints++;
                     divResults.textContent = 'Pedra destroi tesoura, computador ganhou!';
-                    announcesPoints(divPoints);
                 }
-            }
         }
+        announcesPoints(divPoints);
+        resetChoices();    
+    }
 }
 
-// Start the Page.
-// alert("Bem-vindo ao Joken Po!");
 
-// Events creation:
+// EVENTS CREATION:
 let gameButton = document.querySelector('#div-buttons');
 let divResults = document.querySelector('#div-result');
-let divPoints = document.querySelector('#points');
+let divPoints = document.querySelector('#div-points');
 let restartButton = document.querySelector('#button-restart');
 
-    // Cliques nas opções de humano.
+
+// LISTENERS CREATION:
+    // Selections Buttons:
 gameButton.addEventListener('click', (e) => {
     let targetButton = e.target;
 
@@ -123,10 +123,12 @@ gameButton.addEventListener('click', (e) => {
     }
 });
 
-    // Clique no botão restart.
+    // Restart Buttom.
 restartButton.addEventListener('click', (e) => {
     playerOnePoints = 0;
     playerTwoPoints = 0;
+    drawCounter = 0;
+    gameCounter = 0;
     divResults.textContent = '';
     divPoints.textContent = '';
 });

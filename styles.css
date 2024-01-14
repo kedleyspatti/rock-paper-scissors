@@ -24,7 +24,13 @@ div {
     font-family: Lato, sans-serif;
 }
 
+
 .div-results {
+    width: auto;
+    height: 20px;
+}
+
+.div-points {
     width: auto;
     height: 20px;
 }
